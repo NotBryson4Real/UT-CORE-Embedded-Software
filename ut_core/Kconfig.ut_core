@@ -1,3 +1,5 @@
 config BOARD_UT_CORE
 	bool "UT-CORE (STM32U5A5)"
+	# Selecting the SoC here ensures the correct compiler flags, startup code,
+	# and STM32 HAL drivers are included in the build.
 	select SOC_STM32U5A5XX

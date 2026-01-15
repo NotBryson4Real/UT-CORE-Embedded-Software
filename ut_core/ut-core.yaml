@@ -1,13 +1,39 @@
+# --------------------------------------------------------------------------
+# Board Metadata for Twister
+# --------------------------------------------------------------------------
+# The unique ID used by the test runner. Must match the board folder name.
 identifier: ut_core
+
+# Human-readable name used in test reports.
 name: UT-CORE STM32U5A5
+
+# Categorization tags for the hardware.
 type: mcu
 arch: arm
+
+# --------------------------------------------------------------------------
+# Toolchain Support
+# --------------------------------------------------------------------------
+# Lists which compilers are verified to work with this board.
 toolchain:
-  - zephyr
-  - gnuarmemb
+  - zephyr      # The default Zephyr SDK
+  - gnuarmemb   # Standard GNU ARM Embedded toolchain
+
+# --------------------------------------------------------------------------
+# Feature Capabilities
+# --------------------------------------------------------------------------
+# Explicitly lists hardware features supported by the board.
+# Twister uses this to skip tests requiring features you don't list (e.g., wifi).
 supported:
   - gpio
   - watchdog
   - dma
+
+# --------------------------------------------------------------------------
+# Memory constraints (KB)
+# --------------------------------------------------------------------------
+# Used to filter out tests that are too large for the board.
+# '0' is currently a placeholder; updating these to real values (e.g. 2048)
+# allows Twister to automatically skip tests that would overflow memory.
 ram: 0
 flash: 0

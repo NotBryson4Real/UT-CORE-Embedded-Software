@@ -1,6 +1,5 @@
-/*
- * UT-CORE STM32U5A5xx board
- * Crystal-less, no USART console, no MCUboot
+/* UT-CORE STM32U5A5xx Board Definition
+ * Main entry point: Defines identity, memory mapping, and disables unused IPs.
  */
 
 /dts-v1/;
@@ -8,18 +7,21 @@
 #include "ut_core-common.dtsi"
 
 / {
+	/* Board Identity: Required for the build system to identify the hardware. */
 	model = "UT-CORE STM32U5A5";
 	compatible = "utahtech,ut-core-stm32u5a5";
 
 	#address-cells = <1>;
 	#size-cells = <1>;
 
+	/* Chosen Node: Directs Zephyr subsystems to specific hardware instances. */
 	chosen {
-		/* No UART console on this board */
+		/* No "zephyr,console" chosen here, confirming UART is disabled. */
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
 	};
 
+	/* Aliases: Allows generic samples (like Blinky) to find "led0" automatically. */
 	aliases {
 		led0 = &led0;
 		led1 = &led1;
@@ -27,6 +29,9 @@
 	};
 };
 
+/* SWJ (Serial Wire/JTAG) Port Configuration
+ * Removing pinctrl properties prevents the OS from re-configuring debug pins,
+ * ensuring you don't accidentally lock yourself out of the debugger. */
 &swj_port {
 	status = "disabled";
 	/delete-property/ pinctrl-0;
@@ -35,7 +40,7 @@
 	/delete-property/ pinctrl-names;
 };
 
-/* Not using USB during bring-up */
+/* Disable USB Peripherals to save power and simplify initial bring-up. */
 &usbotg_hs {
 	status = "disabled";
 };

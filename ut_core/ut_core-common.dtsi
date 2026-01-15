@@ -1,6 +1,5 @@
-/*
- * UT-CORE (STM32U5A5xx)
- * Crystal-less bring-up, no USART, LED visibility on PC13/14/15
+/* UT-CORE (STM32U5A5xx) Common Configuration
+ * Shared hardware definitions: Clocks, LEDs, and GPIOs.
  */
 
 /dts-v1/;
@@ -9,8 +8,8 @@
 #include <zephyr/dt-bindings/gpio/gpio.h>
 #include <zephyr/dt-bindings/pinctrl/stm32-pinctrl.h>
 
-
 / {
+	/* Map logical LED names to physical GPIO pins. */
 	leds {
 		compatible = "gpio-leds";
 
@@ -31,22 +30,20 @@
 	};
 };
 
-/* Internal 48 MHz oscillator (safe; useful later for USB) */
-&clk_hsi48 {
-	status = "disabled";
-};
+/* Oscillators: Disable unused crystals/clocks to prevent startup hangs. */
+&clk_hsi48 { status = "disabled"; }; /* Internal 48MHz (USB) */
+&clk_hse { status = "disabled"; };   /* External High Speed Crystal */
+&clk_lse { status = "disabled"; };   /* External Low Speed Crystal */
 
-/* No external crystals */
-&clk_hse { status = "disabled"; };
-&clk_lse { status = "disabled"; };
-
+/* Enable the Multi-Speed Internal (MSI) oscillator as the system source. */
 &clk_msis {
   status = "okay";
 };
 
+/* System Clock (RCC) Configuration
+ * Run at a conservative 4MHz off the MSI to ensure stable boot. */
 &rcc {
   clocks = <&clk_msis>;
-  /* Pick a conservative frequency that matches common reset MSIS value */
   clock-frequency = <DT_FREQ_M(4)>;
   ahb-prescaler = <1>;
   apb1-prescaler = <1>;
@@ -54,7 +51,7 @@
   apb3-prescaler = <1>;
 };
 
+/* Enable GPIOC peripheral clock so the LEDs can toggle. */
 &gpioc {
     status = "okay";
 };
-

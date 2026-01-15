@@ -1,58 +1,22 @@
+# Enable the GPIO driver so we can toggle pins
 CONFIG_GPIO=y
 
-# No console yet
+# Explicitly disable the Serial Console for initial bring-up.
+# This avoids boot hangs if the UART pins are not yet correctly defined.
 CONFIG_SERIAL=n
-CONFIG_CONSOLE=n
+CONFIG_CONSOLE=y
+CONFIG_PRINTK=y
 CONFIG_UART_CONSOLE=n
 
+# Enable the Memory Protection Unit and Stack Protection.
+# This causes the CPU to fault immediately on stack overflows, aiding debugging.
 CONFIG_ARM_MPU=y
 CONFIG_HW_STACK_PROTECTION=y
 
-# Keep clock control on (STM32 needs it)
+# Enable the STM32 Clock Control driver.
+# This allows Zephyr to configure the RCC registers based on the Device Tree settings.
 CONFIG_CLOCK_CONTROL=y
 CONFIG_CLOCK_CONTROL_STM32_CUBE=y
 
-
-
-
-
-
-# SPDX-License-Identifier: Apache-2.0
-
-#CONFIG_BOARD_UT_CORE=y
-
-# enable uart driver
-#CONFIG_CONSOLE=n
-#CONFIG_UART_CONSOLE=n
-#CONFIG_SERIAL=n
-
-# enable GPIO
-#CONFIG_GPIO=y
-
-# console
-#CONFIG_CONSOLE=y
-#CONFIG_UART_CONSOLE=y
-
-# Enable MPU
-#CONFIG_ARM_MPU=y
-
-# Enable HW stack protection
-#CONFIG_HW_STACK_PROTECTION=y
-
-
-
-# Keep it simple: internal HSI only
-#CONFIG_CLOCK_CONTROL=y
-#CONFIG_CLOCK_CONTROL_STM32_CUBE=y
-
-# Disable PLL/HSE/LSE expectations
-#CONFIG_STM32_HSE_CLOCK=0
-#CONFIG_STM32_LSE_CLOCK=0
-
-# If enabled anywhere, turn off USB clocking assumptions
-#CONFIG_USB_DEVICE_STACK=n
-#CONFIG_USB=n
-
-# If enabled, HSI48 can cause waits; disable if you don't need it right now
-#CONFIG_STM32_HSI48=n
-
+CONFIG_USE_SEGGER_RTT=y
+CONFIG_RTT_CONSOLE=y

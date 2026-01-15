@@ -1,6 +1,6 @@
 board:
-  name: ut_core
-  full_name: UT-CORE STM32U5
-  vendor: utah_tech
+  name: ut_core                   # The unique identifier used in the build command (west build -b ut_core)
+  full_name: UT-CORE STM32U5      # Human-readable name for documentation and menus
+  vendor: utah_tech               # Vendor namespace for grouping boards
   socs:
-    - name: stm32u5a5xx
+    - name: stm32u5a5xx           # Critical: Links this board to the specific Zephyr SoC family definition
