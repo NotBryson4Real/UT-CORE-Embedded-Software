@@ -1,0 +1,45 @@
+/*
+ * UT-CORE STM32U5A5xx board
+ * Crystal-less, no USART console, no MCUboot
+ */
+
+/dts-v1/;
+
+#include "ut_core-common.dtsi"
+
+/ {
+	model = "UT-CORE STM32U5A5";
+	compatible = "utahtech,ut-core-stm32u5a5";
+
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	chosen {
+		/* No UART console on this board */
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+	};
+
+	aliases {
+		led0 = &led0;
+		led1 = &led1;
+		led2 = &led2;
+	};
+};
+
+&swj_port {
+	status = "disabled";
+	/delete-property/ pinctrl-0;
+	/delete-property/ pinctrl-1;
+	/delete-property/ pinctrl-2;
+	/delete-property/ pinctrl-names;
+};
+
+/* Not using USB during bring-up */
+&usbotg_hs {
+	status = "disabled";
+};
+
+&otghs_phy {
+	status = "disabled";
+};
