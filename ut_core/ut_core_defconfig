@@ -2,7 +2,7 @@
 CONFIG_GPIO=y
 
 # Explicitly disable the Serial Console for initial bring-up.
-# This avoids boot hangs if the UART pins are not yet correctly defined.
+# This avoids boot hangs if the UART pins are not yet correctly define
 CONFIG_SERIAL=n
 CONFIG_CONSOLE=y
 CONFIG_PRINTK=y

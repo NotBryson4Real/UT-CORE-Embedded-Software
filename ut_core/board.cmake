@@ -23,7 +23,7 @@ board_runner_args(pyocd "--target=stm32u5a5rjtx")
 # so the application starts immediately.
 board_runner_args(jlink "--device=STM32U5A5RJ" "--reset-after-load")
 
-# Load the Zephyr scripts that execute the actual flashing commands using the args above.
+# Load the Zephyr scripts that execute the actual flashing commands using the args abov
 include(${ZEPHYR_BASE}/boards/common/stm32cubeprogrammer.board.cmake)
 include(${ZEPHYR_BASE}/boards/common/openocd-stm32.board.cmake)
 include(${ZEPHYR_BASE}/boards/common/pyocd.board.cmake)
